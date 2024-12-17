@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG BASE_IMAGE=ubuntu:22.04
+ARG BASE_IMAGE=occlum/hyperenclave:0.27.13-hypermode-1.3.0-ubuntu22.04
 FROM ${BASE_IMAGE}
 
 LABEL maintainer="secretflow-contact@service.alipay.com"
@@ -80,19 +80,3 @@ RUN git clone https://github.com/emscripten-core/emsdk.git /opt/emsdk && cd /opt
 # install rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
 RUN curl -LsSf https://get.nexte.st/latest/linux | tar zxf - -C ${CARGO_HOME:-~/.cargo}/bin
-
-# install dcap lib in ubuntu 22.04
-RUN echo "ca_directory=/etc/ssl/certs" >> /etc/wgetrc \
-  && echo 'deb [signed-by=/etc/apt/keyrings/intel-sgx-keyring.asc arch=amd64] https://download.01.org/intel-sgx/sgx_repo/ubuntu jammy main' | tee /etc/apt/sources.list.d/intel-sgx.list \
-  && wget https://download.01.org/intel-sgx/sgx_repo/ubuntu/intel-sgx-deb.key \
-  && cat intel-sgx-deb.key | tee /etc/apt/keyrings/intel-sgx-keyring.asc > /dev/null \
-  && rm -f intel-sgx-deb.key \
-  && apt update && apt install -y libsgx-epid libsgx-quote-ex libsgx-dcap-ql libsgx-dcap-quote-verify-dev libsgx-dcap-default-qpl && apt clean \
-  && pushd /usr/lib/x86_64-linux-gnu/ && ln -s libdcap_quoteprov.so.1 libdcap_quoteprov.so && popd
-
-# install intel sgx sdk in ubuntu 22.04
-RUN wget https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu22.04-server/sgx_linux_x64_sdk_2.23.100.2.bin \
-  && chmod +x sgx_linux_x64_sdk_2.23.100.2.bin \
-  && ./sgx_linux_x64_sdk_2.23.100.2.bin --prefix /opt/intel \
-  && source /opt/intel/sgxsdk/environment \
-  && rm -f sgx_linux_x64_sdk_2.23.100.2.bin
