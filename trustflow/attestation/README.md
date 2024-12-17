@@ -27,8 +27,18 @@ For example, Intel TDX：
 ```
 bazel build --define tee_type=tdx //trustflow/attestation/generation/wrapper:libgeneration.so -c opt
 ```
+Hyperencalve:
+```bash
+bazel build --define tee_type=hyper //trustflow/attestation/generation/wrapper:libgeneration.so -c opt
+```
 The generated path for libgeneration.so is `bazel-bin/trustflow/attestation/generation/wrapper/libgeneration.so`
+Compiling sample/generation
+```bash
+bazel build --define tee_type=hyper //trustflow/attestation/sample/generation:
+bazel build --define tee_type=hyper //trustflow/attestation/sample/generation:main --linkopt=-static --copt=-static
 
+```
+The generation main's path is `bazel-bin/trustflow/attestation/sample/generation/main`
 ### CMake
 CMake currently only supports compiling the verification module using WebAssembly to enable remote attestation execution on the Web.
 ```
