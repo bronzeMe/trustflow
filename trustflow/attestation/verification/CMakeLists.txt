@@ -1,7 +1,8 @@
 add_subdirectory(interface)
-add_subdirectory(sgx2)
-add_subdirectory(tdx)
+#add_subdirectory(sgx2)
+#add_subdirectory(tdx)
 add_subdirectory(csv)
+add_subdirectory(hyperenclave)
 add_subdirectory(wrapper)
 
 if(WASM)

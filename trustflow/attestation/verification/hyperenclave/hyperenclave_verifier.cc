@@ -16,7 +16,7 @@
 
 #include "absl/strings/escaping.h"
 #include "cppcodec/base64_rfc4648.hpp"
-#include "sgx_quote_3.h"
+#include "sgx_quote.h"
 #include "yacl/base/byte_container_view.h"
 #include "yacl/base/exception.h"
 #include "yacl/crypto/hash/ssl_hash.h"

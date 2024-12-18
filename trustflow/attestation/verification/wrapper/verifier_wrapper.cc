@@ -17,8 +17,9 @@
 #include "trustflow/attestation/common/constants.h"
 #include "trustflow/attestation/utils/json2pb.h"
 #include "trustflow/attestation/verification/csv/csv_verifier.h"
-#include "trustflow/attestation/verification/sgx2/sgx2_verifier.h"
-#include "trustflow/attestation/verification/tdx/tdx_verifier.h"
+// #include "trustflow/attestation/verification/sgx2/sgx2_verifier.h"
+// #include "trustflow/attestation/verification/tdx/tdx_verifier.h"
+#include "trustflow/attestation/verification/hyperenclave/hyperenclave_verifier.h"
 #include "trustflow/attestation/verification/verifier_factory.h"
 
 #include "secretflowapis/v2/sdc/ual.pb.h"
@@ -34,12 +35,12 @@ trustflow::attestation::Status AttestationReportVerify(
   trustflow::attestation::Status status = {0, "success", ""};
   try {
     VerifierFactory factory;
-    factory.Register(Platform::kPlatformTdx, &TdxAttestationVerifier::Create);
-    factory.Register(Platform::kPlatformSgxDcap,
-                     &Sgx2AttestationVerifier::Create);
+    // factory.Register(Platform::kPlatformTdx, &TdxAttestationVerifier::Create);
+    // factory.Register(Platform::kPlatformSgxDcap,
+    //                  &Sgx2AttestationVerifier::Create);
     factory.Register(Platform::kPlatformCsv, &CsvAttestationVerifier::Create);
     factory.Register(Platform::kPlatformHyperEnclave, &HyperenclaveAttestationVerifier::Create);
-
+    
     JSON2PB(policy_json_str, &policy);
     factory.Create(report_json_str)->VerifyReport(policy);
   } catch (const yacl::ArgumentError& ex) {
