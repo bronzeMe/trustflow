@@ -22,6 +22,7 @@ cc_library(
         "//trustflow/attestation/common:constants",
         "//trustflow/attestation/verification/interface:verifier",
         "@cppcodec",
+        "@sgxsdk//:sgxsdk_header",
         "@yacl//yacl/crypto/hash:ssl_hash",
     ],
 )

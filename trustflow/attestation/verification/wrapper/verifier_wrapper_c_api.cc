@@ -18,8 +18,9 @@
 #include "trustflow/attestation/common/status.h"
 #include "trustflow/attestation/utils/json2pb.h"
 #include "trustflow/attestation/verification/csv/csv_verifier.h"
-#include "trustflow/attestation/verification/sgx2/sgx2_verifier.h"
-#include "trustflow/attestation/verification/tdx/tdx_verifier.h"
+// #include "trustflow/attestation/verification/sgx2/sgx2_verifier.h"
+// #include "trustflow/attestation/verification/tdx/tdx_verifier.h"
+#include "trustflow/attestation/verification/hyperenclave/hyperenclave_verifier.h"
 #include "trustflow/attestation/verification/verifier_factory.h"
 
 #include "secretflowapis/v2/sdc/ual.pb.h"
@@ -36,15 +37,18 @@ std::unique_ptr<trustflow::attestation::verification::VerifierFactory>
 CreateFactory() {
   std::unique_ptr<trustflow::attestation::verification::VerifierFactory>
       factory(new trustflow::attestation::verification::VerifierFactory());
-  factory->Register(
-      trustflow::attestation::Platform::kPlatformTdx,
-      &trustflow::attestation::verification::TdxAttestationVerifier::Create);
-  factory->Register(
-      trustflow::attestation::Platform::kPlatformSgxDcap,
-      &trustflow::attestation::verification::Sgx2AttestationVerifier::Create);
+  // factory->Register(
+  //     trustflow::attestation::Platform::kPlatformTdx,
+  //     &trustflow::attestation::verification::TdxAttestationVerifier::Create);
+  // factory->Register(
+  //     trustflow::attestation::Platform::kPlatformSgxDcap,
+  //     &trustflow::attestation::verification::Sgx2AttestationVerifier::Create);
   factory->Register(
       trustflow::attestation::Platform::kPlatformCsv,
       &trustflow::attestation::verification::CsvAttestationVerifier::Create);
+  factory->Register(
+      trustflow::attestation::Platform::kPlatformHyperEnclave,
+      &trustflow::attestation::verification::HyperenclaveAttestationVerifier::Create);
   return factory;
 }
 

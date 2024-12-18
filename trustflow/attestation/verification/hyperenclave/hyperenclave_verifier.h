@@ -15,7 +15,7 @@
 #pragma once
 
 #include "yacl/base/buffer.h"
-#include "sgx_quote_3.h"
+#include "sgx_quote.h"
 #include "trustflow/attestation/verification/interface/verifier.h"
 #include "trustflow/attestation/verification/hyperenclave/platform.h"
 #include "trustflow/attestation/verification/hyperenclave/sm2.h"

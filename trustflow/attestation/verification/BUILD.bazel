@@ -19,8 +19,7 @@ cc_library(
     hdrs = ["verifier_factory.h"],
     deps = [
         "//trustflow/attestation/verification/csv:csv_verifier",
-        "//trustflow/attestation/verification/sgx2:sgx2_verifier",
-        "//trustflow/attestation/verification/tdx:tdx_verifier",
+        "//trustflow/attestation/verification/hyperenclave:hyperenclave_verifier",
     ],
 )
 

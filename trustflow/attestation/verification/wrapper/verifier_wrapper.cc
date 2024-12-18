@@ -38,6 +38,7 @@ trustflow::attestation::Status AttestationReportVerify(
     factory.Register(Platform::kPlatformSgxDcap,
                      &Sgx2AttestationVerifier::Create);
     factory.Register(Platform::kPlatformCsv, &CsvAttestationVerifier::Create);
+    factory.Register(Platform::kPlatformHyperEnclave, &HyperenclaveAttestationVerifier::Create);
 
     JSON2PB(policy_json_str, &policy);
     factory.Create(report_json_str)->VerifyReport(policy);

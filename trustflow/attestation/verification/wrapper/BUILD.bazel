@@ -22,8 +22,6 @@ cc_library(
         "//trustflow/attestation/common:status",
         "//trustflow/attestation/verification:verifier_factory",
         "//trustflow/attestation/verification/csv:csv_verifier",
-        "//trustflow/attestation/verification/sgx2:sgx2_verifier",
-        "//trustflow/attestation/verification/tdx:tdx_verifier",
         "//trustflow/attestation/verification/hyperenclave:hyperenclave_verifier",
     ],
 )
@@ -36,8 +34,6 @@ cc_library(
         "//trustflow/attestation/common:status",
         "//trustflow/attestation/verification:verifier_factory",
         "//trustflow/attestation/verification/csv:csv_verifier",
-        "//trustflow/attestation/verification/sgx2:sgx2_verifier",
-        "//trustflow/attestation/verification/tdx:tdx_verifier",
         "//trustflow/attestation/verification/hyperenclave:hyperenclave_verifier",
     ],
 )
