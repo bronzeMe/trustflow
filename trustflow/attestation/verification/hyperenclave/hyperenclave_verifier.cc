@@ -106,11 +106,18 @@ void HyperenclaveAttestationVerifier::Init() {
   JSON2PB(report_.json_report(), &hyper_report);
   quote_ = base64::decode(hyper_report.b64_quote());
 
+  // Attempt to read AK public key Qx and Qy from environment variables
+  const char* env_qx = std::getenv("AKPubQx");
+  const char* env_qy = std::getenv("AKPubQy");
+
+  std::string ak_ecc_pub_qx = env_qx ? env_qx : kAkEccPubQx;
+  std::string ak_ecc_pub_qy = env_qy ? env_qy : kAkEccPubQy;
+
   //Create TPM AK public key via Qx and Qy
   sm2_pub_key_t pubkey;
 
   YACL_ENFORCE_EQ(
-    createSm2PubKeyFromHex(kAkEccPubQx, kAkEccPubQy, pubkey), true, 
+    createSm2PubKeyFromHex(ak_ecc_pub_qx, ak_ecc_pub_qy, pubkey), true, 
     "Failed to create SM2 public key.");
 
   size_t keylen = sizeof(sm2_pub_key_t);
@@ -174,7 +181,7 @@ void HyperenclaveAttestationVerifier::ParseUnifiedReport(
   //For hyperenclave, fill the pcr_digest into boot measurement
   // pcr_digest
   std::string pcr_digest = absl::BytesToHexString(absl::string_view(
-      reinterpret_cast<const char*>(&tpm_attest_.quote.pcr_digest),
+      reinterpret_cast<const char*>(&tpm_attest_.quote.pcr_digest.t.buffer),
       HASH_LENGTH));
   attrs.set_hex_boot_measurement(pcr_digest);
 }
